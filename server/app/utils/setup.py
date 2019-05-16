@@ -26,10 +26,6 @@ def create_env_file():
     print("REDIS_PW= ?")
     REDIS_PW = input(prompt)
 
-    print("BROKER_USER= ?")
-    BROKER_USER = input(prompt)
-    print("BROKER_PW= ?")
-    BROKER_PW = input(prompt)
 
     SECRET_KEY = secrets.token_hex(32)
     JWT_SECRET = secrets.token_hex(32)
@@ -42,8 +38,6 @@ def create_env_file():
         "POSTGRES_PW={}".format(POSTGRES_PW),
         "DATABASE={}".format(DATABASE),
         "REDIS_PW={}".format(REDIS_PW),
-        "BROKER_USER={}".format(BROKER_USER),
-        "BROKER_PW={}".format(BROKER_PW),
         "SECRET_KEY={}".format(SECRET_KEY),
         "JWT_SECRET={}".format(JWT_SECRET)
 

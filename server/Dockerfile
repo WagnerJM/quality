@@ -22,4 +22,4 @@ COPY . /server
 #FOR DEV
 #CMD ["flask", "run", "--host=0.0.0.0"]
 
-#CMD ["gunicorn", "-w", "2", "-b", ":8000", "wsgi:app"]
+CMD ["gunicorn", "-w", "4", "-b", ":8000", "wsgi:app"]

@@ -14,7 +14,7 @@ def str2uuid(string):
     return UUID(string)
 
 def create_dataframe(qrk_id):
-    #Get QRK from qrk_id
+    #Load QRK and get qrkID from qrk_id
     qrk = Qrk.find_by_id(str2uuid(qrk_id)
 
     #create pandas dataframe from query where only the valid are used
@@ -33,11 +33,11 @@ def create_dataframe(qrk_id):
 
     qrk.save()
 
-    return df
+    return qrk, df
 
 
 
-def create_QC_Chart(qrk, df, path=None):
+def create_Chart(qrk, df, path=None):
     
     min_y = df.wert.get('min')
     max_y = df.wert.get("max")
@@ -92,6 +92,8 @@ def create_QC_Chart(qrk, df, path=None):
     if path is None:
         print("File can not be saved. Not file path.")
     else:
+        qrk.dateiname = secure_filename(qrk.titel)
+        qrk.save()
         plt.savefig(path + secure_filename(qrk.titel) + '.png' , orientation="landscape")
         print("File created")
 

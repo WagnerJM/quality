@@ -8,9 +8,6 @@
 
 https://www.revsys.com/tidbits/celery-and-django-and-docker-oh-my/
 
-https://stackoverflow.com/questions/54499070/leaflet-and-vuejs-how-to-add-a-new-marker-onclick-in-the-map
-
-
 
 ## Installation
 
@@ -40,3 +37,35 @@ secrets.token_hex(32)
 </code>
 
 Anschließend Key rauskopieren und in .env Datei einfügen
+
+
+## Production Deployment
+
+- Anforderungen:
+    - Linux Server (vorzugsweise ubuntu)
+    - docker 
+    - docker-compose
+
+- Ausführen des start.sh
+
+- clone client repo
+<code>
+git clone https://github.com/WagnerJM/quality_client.git
+
+</code>
+- Damit docker-compose alle Container erstellen kann, muss das Client-Verzeichnis "client" heißen
+
+`mv quality_client client`
+
+- Damit docker die App erreichbar macht im Netzwerk
+    - check if docker runs 
+
+    <code>
+    sudo sytemctl status docker
+    </code>
+
+    - run docker compose as daemon
+
+    <code>
+    docker-compose up -d  
+    </code>
