@@ -5,15 +5,6 @@ import secrets
 def create_env_file():
     prompt = "> "
 
-    print("APP_SETTINGS= ? ex. production, development, testing, staging")
-    APP_SETTINGS = input(prompt)
-
-    print("FLASK_APP= ? ex. run.py")
-    FLASK_APP = input(prompt)
-
-    print("FLASK_ENV= ? ex. development, production")
-    FLASK_ENV = input(prompt)
-
     print("POSTGRES_USER= ?")
     POSTGRES_USER = input(prompt)
 
@@ -26,10 +17,6 @@ def create_env_file():
     print("REDIS_PW= ?")
     REDIS_PW = input(prompt)
 
-    print("BROKER_USER= ?")
-    BROKER_USER = input(prompt)
-    print("BROKER_PW= ?")
-    BROKER_PW = input(prompt)
 
     SECRET_KEY = secrets.token_hex(32)
     JWT_SECRET = secrets.token_hex(32)
@@ -42,8 +29,6 @@ def create_env_file():
         "POSTGRES_PW={}".format(POSTGRES_PW),
         "DATABASE={}".format(DATABASE),
         "REDIS_PW={}".format(REDIS_PW),
-        "BROKER_USER={}".format(BROKER_USER),
-        "BROKER_PW={}".format(BROKER_PW),
         "SECRET_KEY={}".format(SECRET_KEY),
         "JWT_SECRET={}".format(JWT_SECRET)
 
