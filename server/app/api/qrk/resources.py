@@ -5,7 +5,6 @@ from app.utils import str2uuid
 from app.database import db
 from sqlalchemy import and_
 from datetime import datetime
-from app.api.qrk.tasks import create_diagramm
 
 class QrkListApi(Resource):
     def get(self):
@@ -48,8 +47,6 @@ class MesswertApi(Resource):
 
         qrk.save()
 
-        create_diagramm.delay(qrk_id)
-
         return {
             "msg": "Messpunkt wurde gespeichert."
         }, 201
@@ -63,8 +60,6 @@ class MesswertApi(Resource):
             }, 500
         messwert.update(request.json)
         db.session.commit()
-
-        create_diagramm.delay(qrk_id)
 
         return {
             "msg": "Messwert wurde modifiziert."
