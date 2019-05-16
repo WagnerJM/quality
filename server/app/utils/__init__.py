@@ -1,9 +1,10 @@
 import matplotlib
 import matplotlib.pyplot as plt
+import pandas as pd
 import numpy as np  
 from app.database import db
 from werkzeug.utils import secure_filename
-from app.api.qrk.models import Qrk
+from app.api.qrk.models import Qrk, Messwert
 
 from uuid import UUID
 
@@ -15,10 +16,10 @@ def str2uuid(string):
 
 def create_dataframe(qrk_id):
     #Get QRK from qrk_id
-    qrk = Qrk.find_by_id(str2uuid(qrk_id)
+    qrk = Qrk.find_by_id(str2uuid(qrk_id))
 
     #create pandas dataframe from query where only the valid are used
-    df = pd.read_sql(Messwert.query.filter(qrk_id=qrk.qrkID), db.session.bind).query("valid == True")
+    df = pd.read_sql(Messwert.query.filter(qrk_id=qrkarten.qrkID), db.engine).query("valid == True")
 
     #erstelle statistik grundwerte
     stats = df.wert.describe()
@@ -55,17 +56,17 @@ def create_QC_Chart(qrk, df, path=None):
 
     #erstellt die OWG/UWG Linie + Hintergrund
     plt.axhline(qrk.obere_warngrenze, color="blue", linestyle="--")
-    plt.annotate("OWG", xy=(max_x + 2, qrk.obere_warngrenze)
+    plt.annotate("OWG", xy=(max_x + 2, qrk.obere_warngrenze))
 
     plt.axhline(qrk.untere_warngrenze, color="blue", linestyle="--")
-    plt.annotate("UWG", xy=(max_x + 2, qrk.untere_warngrenze)
+    plt.annotate("UWG", xy=(max_x + 2, qrk.untere_warngrenze))
 
     #erstellt die OEG/UEG Linie
     plt.axhline(qrk.obere_eingriffsgrenze, color="orange", linestyle="--")
-    plt.annotate("OEG", xy=(max_x + 2, qrk.obere_eingriffsgrenze
+    plt.annotate("OEG", xy=(max_x + 2, qrk.obere_eingriffsgrenze))
 
     plt.axhline(qrk.untere_eingriffsgrenze, color="orange", linestyle="--")
-    plt.annotate("UEG", xy=(max_x + 2, qrk.untere_eingriffsgrenze
+    plt.annotate("UEG", xy=(max_x + 2, qrk.untere_eingriffsgrenze))
 
     # OEG/UEG Hintergrund Bereich
     plt.fill_between(df.datum,qrk.mittelwert+ (2 * qrk.stdabw)  ,(qrk.mittelwert + 5*  qrk.stdabw), color="red", alpha=0.2)
@@ -73,7 +74,7 @@ def create_QC_Chart(qrk, df, path=None):
 
     #erstellt die Mittelwert Linie
     plt.axhline(qrk.mittelwert, color="green", linestyle="--")
-    plt.annotate("Mittelwert", xy=(max_x + 2, qrk.mittelwert)
+    plt.annotate("Mittelwert", xy=(max_x + 2, qrk.mittelwert))
 
     #legt die Größe des Plots fest
     plt.rcParams["figure.figsize"] = [16,9]
@@ -98,5 +99,4 @@ def create_QC_Chart(qrk, df, path=None):
 
 
 
-    
 

@@ -20,7 +20,3 @@ then
 else
   echo ".env already exists"
 fi
-
-# populate the .env file with environment variables
-
-#python ./server/app/lib/setup.py

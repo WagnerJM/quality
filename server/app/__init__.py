@@ -78,6 +78,11 @@ def create_app():
     	}), 401
 
 	## import area für resource
+	from app.api.qrk.resources import QrkApi, QrkListApi, MesswertApi
+	api.add_resource(QrkListApi, "/api/v1/qrk")
+	api.add_resource(QrkApi, "/api/v1/qrk/<string:qrk_id>")
+
+	api.add_resource(MesswertApi, "/api/v1/<string:qrk_id>/messwert", "/api/v1/<string:qrk_id>/messwert/<string:messwert_id>" )
 	
 
 	db.init_app(app)

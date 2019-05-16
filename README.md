@@ -29,4 +29,21 @@ https://stackoverflow.com/questions/54499070/leaflet-and-vuejs-how-to-add-a-new-
 6. Container bauen und starten
 `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d`
 
+7. Öffne ein Terminal
+`docker ps`
+- Kopiere die _server id
+8. Öffne eine Bash Konsole zum Container
+`docker exec -it [CONTAINER_ID] bash`
+Dabei loggt man sich in den Container rein
+9. Erstelle die Datenbank schemas
+<code>
+flask db init
+
+flask db migrate
+
+flask db upgrade
+</code>
+
+Nachdem das fertig ist, kann mit der App gearbeitet werden.
+
 
