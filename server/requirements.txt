@@ -16,3 +16,4 @@ Flask-JWT-Extended
 pandas
 matplotlib
 numpy
+gunicorn
