@@ -14,8 +14,9 @@ class QrkListApi(Resource):
     
     def post(self):
         schema = QrkSchema()
-        qrk = schema.load(data.json)
-        erster_messpunkt = Messwert(wert=0.0)
+        qrk_schema = schema.load(request.get_json())
+        qrk = Qrk(**request.get_json())
+        erster_messpunkt = Messwert(wert=0.0, date="16.05.2019")
         qrk.messwerte.append(erster_messpunkt)
         qrk.save()
         return {
@@ -53,7 +54,7 @@ class MesswertApi(Resource):
     
     def put(self, qrk_id, messwert_id):
         qrk = Qrk.find_by_id(str2uuid(qrk_id))
-        messwert = Messwert.query.filter(and_(qrk_id == qrk.qrkID, messwert.id == str2uuid(messwert_id)))
+        messwert = Messwert.query.filter(and_(qrk_id == qrkarten.qrkID, messwert.id == str2uuid(messwert_id)))
         if not messwert:
             return {
                 "msg": "Messwert konnte nicht gefunden werden."
