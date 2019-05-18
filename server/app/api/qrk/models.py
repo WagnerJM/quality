@@ -1,11 +1,11 @@
 from app.database import BaseMixin, db
 from app.serializer import ma
 from sqlalchemy.dialects.postgresql import JSON
-from marshmallow import post_load, fields
+from marshmallow import post_load
 from datetime import datetime
 
 class Qrk(BaseMixin, db.Model):
-    __tablename__ = "qrkarten"
+    __tablename__ = "qrks"
 
     qrkID = db.Column(db.Integer, primary_key=True)
     titel = db.Column(db.String, nullable=False)
@@ -31,13 +31,13 @@ class Qrk(BaseMixin, db.Model):
     
 
 class Messwert(BaseMixin, db.Model):
-    __tablename__ = 'messwerte'
+    __tablename__ = 'messwert'
 
     messwertID = db.Column(db.Integer, primary_key=True)
     datum = db.Column(db.DateTime, nullable=False)
     wert = db.Column(db.Float, nullable=False)
     valid = db.Column(db.Boolean, default=True)
-    qrk_id = db.Column(db.Integer, db.ForeignKey('qrkarten.qrkID'))
+    qrk_id = db.Column(db.Integer, db.ForeignKey('qrks.qrkID'))
 
     def __init__(self, wert, date):
         self.wert = wert
@@ -53,12 +53,10 @@ class MesswertSchema(ma.Schema):
         )
 
 class QrkSchema(ma.Schema):
-    
-
     class Meta:
         fields = (
-            "titel",
-            "messwerte"
+            "id",
+            "titel"
         )
 
 

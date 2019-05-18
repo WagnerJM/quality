@@ -19,7 +19,7 @@ def create_dataframe(qrk_id):
     qrk = Qrk.find_by_id(str2uuid(qrk_id))
 
     #create pandas dataframe from query where only the valid are used
-    df = pd.read_sql(Messwert.query.filter(qrk_id=qrkarten.qrkID), db.engine).query("valid == True")
+    df = pd.read_sql(Messwert.query.filter(qrk_id=qrks.qrkID), db.engine).query("valid == True")
 
     #erstelle statistik grundwerte
     stats = df.wert.describe()
