@@ -9,3 +9,12 @@ services:
       - FLASK_ENV=development
      
     command: flask run --host=0.0.0.0
+
+  task_queue:
+    restart: always
+    build:
+      context: ./server/tasks
+      dockerfile: Dockerfile
+    volumes:
+      - ./server:/app
+    command: celery -A tasks  --loglevel=debug

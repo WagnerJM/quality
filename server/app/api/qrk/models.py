@@ -20,7 +20,7 @@ class Qrk(BaseMixin, db.Model):
 
     mittelwert = db.Column(db.Float)
 
-    dateiname = db.Column(db.String)
+    datei_pfad = db.Column(db.String)
 
     messwerte = db.relationship('Messwert', backref="Qrk", lazy=False)
 

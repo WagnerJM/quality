@@ -5,6 +5,7 @@ from app.utils import str2uuid
 from app.database import db
 from sqlalchemy import and_
 from datetime import datetime
+from app.api.qrk.task import create_diagramm
 
 class QrkListApi(Resource):
     def get(self):
@@ -17,8 +18,6 @@ class QrkListApi(Resource):
         data = request.get_json()
         qrk_schema = schema.load(data)
         qrk = Qrk(**data)
-        erster_messpunkt = Messwert(wert=0.0, date="16.05.2019")
-        qrk.messwerte.append(erster_messpunkt)
         qrk.save()
         return { 
             "msg": "Qrk wurde angelegt"
@@ -42,7 +41,7 @@ class QrkApi(Resource):
             "msg": "Qrk Daten wurden geupdatet."
         }, 200
 
-class MesswertApi(Resource):
+class MesswertListApi(Resource):
     def post(self, qrk_id):
         data = request.get_json()
         qrk = Qrk.find_by_id(str2uuid(qrk_id))
@@ -50,11 +49,13 @@ class MesswertApi(Resource):
         qrk.messwerte.append(neuer_Messwert)
 
         qrk.save()
+        create_diagramm.delay(qrk_id, "../../plots")
 
         return {
             "msg": "Messpunkt wurde gespeichert."
         }, 201
-    
+
+class MesswertApi(Resource):
     def put(self, qrk_id, messwert_id):
         qrk = Qrk.find_by_id(str2uuid(qrk_id))
         messwert = Messwert.query.filter(and_(qrk_id == qrks.qrkID, messwert.id == str2uuid(messwert_id)))
@@ -65,6 +66,7 @@ class MesswertApi(Resource):
         messwert.update(request.json)
         db.session.commit()
 
+        #create_diagramm.delay(qrk_id, "../../plots")
         return {
             "msg": "Messwert wurde modifiziert."
         }, 201
