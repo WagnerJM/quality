@@ -12,5 +12,5 @@ flask-migrate
 flask-marshmallow
 marshmallow-sqlalchemy
 psycopg2-binary
-celery[redis]
+
 redis
