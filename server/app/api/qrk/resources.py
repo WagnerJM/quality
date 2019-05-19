@@ -5,7 +5,7 @@ from app.utils import str2uuid
 from app.database import db
 from sqlalchemy import and_
 from datetime import datetime
-from app.api.qrk.task import create_diagramm
+from app.utils import create_dataframe, create_QC_Chart
 
 class QrkListApi(Resource):
     def get(self):
@@ -49,7 +49,8 @@ class MesswertListApi(Resource):
         qrk.messwerte.append(neuer_Messwert)
 
         qrk.save()
-        create_diagramm.delay(qrk_id, "../../plots")
+        df = create_dataframe(qrk_id)
+        #create_QC_Chart(qrk, df, "../../plots")
 
         return {
             "msg": "Messpunkt wurde gespeichert."
