@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from app.database import db
@@ -77,9 +77,11 @@ def create_app():
         'error': 'token_revoked'
     	}), 401
 	
-	@app.route("/plot/<string:filename>")
+	@app.route("/plot/<string:filename>.png")
 	def getPlot(filename):
-		pass
+
+		return send_file("static/plots/{}.png".format(filename))
+		
 
 	## import area für resource
 	from app.api.qrk.resources import QrkApi, QrkListApi, MesswertApi, MesswertListApi
