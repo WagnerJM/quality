@@ -3,6 +3,7 @@ version: '3.5'
 services:
 
   database:
+    container_name: database
     build:
       context: ./db
       dockerfile: Dockerfile
@@ -16,6 +17,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PW=${POSTGRES_PW}
   server:
+    container_name: server
     build:
       context: ./server
       dockerfile: Dockerfile
@@ -42,6 +44,7 @@ services:
 
 
   redis:
+    container_name: cache
     image: redis:latest
     command: redis-server --requirepass ${REDIS_PW}
     expose:
@@ -51,6 +54,7 @@ services:
 
 
   task_queue:
+    container_name: tasks
     restart: always
     build:
       context: ./server/tasks
@@ -71,6 +75,7 @@ services:
       - redis
 
   monitor:
+    container_name: task_monitor
     build:
       context: ./server/tasks
       dockerfile: Dockerfile
