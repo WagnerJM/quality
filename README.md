@@ -24,7 +24,7 @@ https://stackoverflow.com/questions/54499070/leaflet-and-vuejs-how-to-add-a-new-
 4. Client-Repo klonen
 `git clone https://github.com/WagnerJM/quality_client.git client`
 5. .env Datei erstellen
-    `sh start.sh`
+    `python start.py`
     Dabei werden verschiedene Daten abgefragt die für die App notwendig sind und eine .env Datei erstellt
 6. Container bauen und starten
 `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d`
@@ -37,11 +37,13 @@ https://stackoverflow.com/questions/54499070/leaflet-and-vuejs-how-to-add-a-new-
 Dabei loggt man sich in den Container rein
 9. Erstelle die Datenbank schemas
 <code>
+
 flask db init
 
 flask db migrate
 
 flask db upgrade
+
 </code>
 
 Nachdem das fertig ist, kann mit der App gearbeitet werden.
