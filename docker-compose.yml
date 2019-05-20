@@ -50,36 +50,40 @@ services:
       back:
 
 
-  #task_queue:
-    #restart: always
-    #build:
-      #context: ./server/tasks
-      #dockerfile: Dockerfile
-    #volumes:
-      #- ./server:/app
-    #command: celery -A tasks worker  --loglevel=info
-    #environment:
-      #- REDIS_PW=${REDIS_PW}
+  task_queue:
+    restart: always
+    build:
+      context: ./server/tasks
+      dockerfile: Dockerfile
+    volumes:
+      - ./server:/app
+    command: celery -A tasks worker  --loglevel=info
+    environment:
+      - REDIS_PW=${REDIS_PW}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PW=${POSTGRES_PW}
+      - DATABASE=${DATABASE}
 
-    #networks:
-      #back:
-    #depends_on:
-      #- redis
 
-  #monitor:
-    #build:
-      #context: ./server/tasks
-      #dockerfile: Dockerfile
-    #ports:
-      #- 5555:5555
-    #volumes:
-      #- ./server/:/app
-    #entrypoint: flower
-    #command: -A tasks worker --port=5555 --broker=redis://:${REDIS_PW}@redis:6379/1
-    #networks:
-      #back:
-    #depends_on:
-      #- redis
+    networks:
+      back:
+    depends_on:
+      - redis
+
+  monitor:
+    build:
+      context: ./server/tasks
+      dockerfile: Dockerfile
+    ports:
+      - 5555:5555
+    volumes:
+       ./server/:/app
+    entrypoint: flower
+    command: -A tasks worker --port=5555 --broker=redis://:${REDIS_PW}@redis:6379/1
+    networks:
+      back:
+    depends_on:
+      - redis
 
 networks:
   front:

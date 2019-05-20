@@ -3,7 +3,7 @@ from app.serializer import ma
 from sqlalchemy.dialects.postgresql import JSON
 from marshmallow import post_load
 from datetime import datetime
-
+from marshmallow.fields import Nested
 class Qrk(BaseMixin, db.Model):
     __tablename__ = "qrks"
 
@@ -53,10 +53,21 @@ class MesswertSchema(ma.Schema):
         )
 
 class QrkSchema(ma.Schema):
+    messwerte = Nested(MesswertSchema, many=True, exclude="qrk_id")
     class Meta:
         fields = (
             "id",
-            "titel"
+            "titel",
+            "x_achse_titel",
+            "y_achse_titel",
+            "obere_warngrenze",
+            "untere_warngrenze",
+            "obere_eingriffsgrenze",
+            "untere_eingriffsgrenze",
+            "stdabw",
+            "mittelwerte",
+            "datei_pfad"
+            
         )
 
 

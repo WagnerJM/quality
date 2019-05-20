@@ -5,7 +5,7 @@ from app.utils import str2uuid
 from app.database import db
 from sqlalchemy import and_
 from datetime import datetime
-from app.utils import create_dataframe, create_QC_Chart
+from app.worker import celery
 
 class QrkListApi(Resource):
     def get(self):
@@ -49,8 +49,7 @@ class MesswertListApi(Resource):
         qrk.messwerte.append(neuer_Messwert)
 
         qrk.save()
-        df = create_dataframe(qrk_id)
-        #create_QC_Chart(qrk, df, "../../plots")
+        task = celery.send_task('create_QC_Chart', qrk_id, "./plots/")
 
         return {
             "msg": "Messpunkt wurde gespeichert."
