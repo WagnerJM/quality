@@ -77,7 +77,7 @@ services:
     ports:
       - 5555:5555
     volumes:
-       ./server/:/app
+      - ./server/:/app
     entrypoint: flower
     command: -A tasks worker --port=5555 --broker=redis://:${REDIS_PW}@redis:6379/1
     networks:
