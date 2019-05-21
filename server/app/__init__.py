@@ -77,7 +77,7 @@ def create_app():
         'error': 'token_revoked'
     	}), 401
 	
-	@app.route("/plot/<string:filename>.png")
+	@app.route("/plot/<string:filename>")
 	def getPlot(filename):
 
 		return send_file("static/plots/{}.png".format(filename))
