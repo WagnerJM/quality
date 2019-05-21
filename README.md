@@ -33,3 +33,5 @@ docker-compose exec server flask db upgrade
 ```
 
 Nachdem das fertig ist, kann mit der App gearbeitet werden.
+
+Der Dienst ist über die <http://Server-IP:8080> erreichbar.
