@@ -22,7 +22,7 @@
 7. Erstelle die Datenbank schemas
 Zweites Terminalfenster öffnen und  dort folgendes eingeben.
 
-```
+```docker
 
 docker-compose exec server flask db init
 
