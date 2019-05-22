@@ -81,6 +81,10 @@ def create_app():
 	def getPlot(filename):
 
 		return send_file("static/plots/{}.png".format(filename))
+	
+	@app.route("/placeholder")
+	def placeholder():
+		return send_file("static/plots/placeholder.png")
 		
 
 	## import area für resource

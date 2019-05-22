@@ -96,7 +96,7 @@ def create_QC_Chart(qrk, df, path=None):
     if path is None:
         print("File can not be saved. Not file path.")
     else:
-        datei_pfad = "http://localhost:5001/plot/" + secure_filename(qrk.titel)
+        datei_pfad = "http://localhost:5001/plot/{}".format(secure_filename(qrk.titel))
         qrk.datei_pfad = datei_pfad
         qrk.save()
         

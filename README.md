@@ -35,3 +35,22 @@ docker-compose exec server flask db upgrade
 Nachdem das fertig ist, kann mit der App gearbeitet werden.
 
 Der Dienst ist über die <http://Server-IP:8080> erreichbar.
+
+## todos
+
+    - Queue Server testen
+    - Chart erstellen lassen
+    - Installation verbessern
+
+## Roadmap
+
+    1. Release
+    2. Authentication-System
+        1. Planung des Systems
+        2. Tests für das Login System
+        3. Model erstellen
+        4. Tests für die Resourcen
+        5. Resourcen erstellen
+        6. Tests fürs Admin System
+        7. Admin (Register)
+    3. SOPs? 
