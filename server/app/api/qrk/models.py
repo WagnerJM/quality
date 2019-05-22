@@ -4,6 +4,8 @@ from sqlalchemy.dialects.postgresql import JSON
 from marshmallow import post_load
 from datetime import datetime
 from marshmallow.fields import Nested
+
+
 class Qrk(BaseMixin, db.Model):
     __tablename__ = "qrks"
 
@@ -17,6 +19,7 @@ class Qrk(BaseMixin, db.Model):
     obere_eingriffsgrenze = db.Column(db.Float)
     untere_eingriffsgrenze = db.Column(db.Float)
     stdabw = db.Column(db.Float)
+    activ = db.Column(db.Boolean, default=True)
 
     mittelwert = db.Column(db.Float)
 

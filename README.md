@@ -2,16 +2,6 @@
 
 ## todo
 
-
-
-## Notizen
-
-https://www.revsys.com/tidbits/celery-and-django-and-docker-oh-my/
-
-https://stackoverflow.com/questions/54499070/leaflet-and-vuejs-how-to-add-a-new-marker-onclick-in-the-map
-
-
-
 ## Installation
 
 1. Linux Server (vorzugsweise Ubuntu)
@@ -29,23 +19,38 @@ https://stackoverflow.com/questions/54499070/leaflet-and-vuejs-how-to-add-a-new-
 6. Container bauen und starten
 `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d`
 
-7. Öffne ein Terminal
-`docker ps`
-- Kopiere die _server id
-8. Öffne eine Bash Konsole zum Container
-`docker exec -it [CONTAINER_ID] bash`
-Dabei loggt man sich in den Container rein
-9. Erstelle die Datenbank schemas
-<code>
+7. Erstelle die Datenbank schemas
+Zweites Terminalfenster öffnen und  dort folgendes eingeben.
 
-flask db init
+```docker
 
-flask db migrate
+docker-compose exec server flask db init
 
-flask db upgrade
+docker-compose exec server flask db migrate
 
-</code>
+docker-compose exec server flask db upgrade
+
+```
 
 Nachdem das fertig ist, kann mit der App gearbeitet werden.
 
+Der Dienst ist über die <http://Server-IP:8080> erreichbar.
 
+## todos
+
+    - Queue Server testen
+    - Chart erstellen lassen
+    - Installation verbessern
+
+## Roadmap
+
+    1. Release
+    2. Authentication-System
+        1. Planung des Systems
+        2. Tests für das Login System
+        3. Model erstellen
+        4. Tests für die Resourcen
+        5. Resourcen erstellen
+        6. Tests fürs Admin System
+        7. Admin (Register)
+    3. SOPs? 

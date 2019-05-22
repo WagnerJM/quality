@@ -1,5 +1,5 @@
 import os
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from app.database import db
@@ -79,7 +79,13 @@ def create_app():
 	
 	@app.route("/plot/<string:filename>")
 	def getPlot(filename):
-		pass
+
+		return send_file("static/plots/{}.png".format(filename))
+	
+	@app.route("/placeholder")
+	def placeholder():
+		return send_file("static/plots/placeholder.png")
+		
 
 	## import area für resource
 	from app.api.qrk.resources import QrkApi, QrkListApi, MesswertApi, MesswertListApi

@@ -66,7 +66,7 @@ class MesswertApi(Resource):
         messwert.update(request.json)
         db.session.commit()
 
-        #create_diagramm.delay(qrk_id, "../../plots")
+        task = celery.send_task('create_QC_Chart', qrk_id, "./plots/")
         return {
             "msg": "Messwert wurde modifiziert."
         }, 201
