@@ -34,7 +34,7 @@ def create_env_file():
 
         ]
 
-        with open(os.path.join(.env'), 'a') as f:
+        with open(os.path.join('.env'), 'a') as f:
             [ f.write(env_var) for env_var in env_list ]
             f.close()
 
