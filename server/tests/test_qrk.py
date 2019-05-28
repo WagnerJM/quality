@@ -29,7 +29,7 @@ def test_put_resource():
 	"y_achse_titel": "Y-Achse"
     }
     r = requests.put(
-        "http://localhost:5001/api/v1/qrk/6746138d-1d58-4584-9cc2-2be70911a712", json=data)
+        "http://localhost:5001/api/v1/qrk/acfe19e0-3fcf-4084-ba4f-bab2b7b8f530", json=data)
 
     assert r.status_code == 200
     assert r.json() == {
@@ -39,10 +39,10 @@ def test_put_resource():
 
 def test_get_specific_qrk():
     r = requests.get(
-        "http://localhost:5001/api/v1/qrk/6746138d-1d58-4584-9cc2-2be70911a712")
+        "http://localhost:5001/api/v1/qrk/acfe19e0-3fcf-4084-ba4f-bab2b7b8f530")
     assert r.status_code == 200
     assert r.json() == {
-        "id": "6746138d-1d58-4584-9cc2-2be70911a712",
+        "id": "acfe19e0-3fcf-4084-ba4f-bab2b7b8f530",
         "titel": "Neuer Titel"
     }
 

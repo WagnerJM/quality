@@ -46,18 +46,21 @@ class Messwert(BaseMixin, db.Model):
         self.wert = wert
         self.datum = datetime.strptime(date, "%d.%m.%Y")
 
-class MesswertSchema(ma.Schema):
+class MesswertSchema(ma.ModelSchema):
     class Meta:
+        model = Messwert
         fields = (
             "id",
-            "datum"
+            "datum",
             "wert",
             "valid"
         )
 
-class QrkSchema(ma.Schema):
-    messwerte = Nested(MesswertSchema, many=True, exclude="qrk_id")
+class QrkSchema(ma.ModelSchema):
+    messwerte = Nested(MesswertSchema, many=True)
+
     class Meta:
+        model= Qrk
         fields = (
             "id",
             "titel",
@@ -68,8 +71,8 @@ class QrkSchema(ma.Schema):
             "obere_eingriffsgrenze",
             "untere_eingriffsgrenze",
             "stdabw",
-            "mittelwerte",
-            "datei_pfad"
+            "datei_pfad",
+            "messwerte"
             
         )
 
