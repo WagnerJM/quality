@@ -1,6 +1,6 @@
 from uuid import UUID
 import pandas as pd
-
+import os
 import matplotlib
 import numpy as np  
 
@@ -17,7 +17,7 @@ def create_dataframe(qrk_id):
     #Get QRK from qrk_id
     qrk = Qrk.find_by_id(str2uuid(qrk_id))
 
-    query = "SELECT * FROM messwert WHERE qrk_id={} ".format(qrk.qrkID)
+    query = 'SELECT * FROM messwert WHERE "qrk_id" = {}; '.format(qrk.qrkID)
     #create pandas dataframe from query where only the valid are used
     df = pd.read_sql(query, db.engine).query("valid == True")
 
@@ -44,6 +44,10 @@ def create_dataframe(qrk_id):
 
 
 def create_QC_Chart(qrk, df):
+
+    if os.path.isfile('app/static/plots/{}.png'.format(qrk.id)):
+        print("removing file")
+        os.remove('app/static/plots/{}.png'.format(qrk.id))
     
     min_y = df.wert.get('min')
     max_y = df.wert.get("max")
@@ -74,8 +78,8 @@ def create_QC_Chart(qrk, df):
     #plt.annotate("UEG", xy=(max_x + 2, qrk.untere_eingriffsgrenze))
 
     # OEG/UEG Hintergrund Bereich
-    plt.fill_between(df.datum,qrk.mittelwert+ (2 * qrk.stdabw)  ,(qrk.mittelwert + 5*  qrk.stdabw), color="red", alpha=0.2)
-    plt.fill_between(df.datum,qrk.mittelwert- (2 * qrk.stdabw)  ,(qrk.mittelwert - 5*  qrk.stdabw), color="red", alpha=0.2)
+    plt.fill_between(df.datum,qrk.mittelwert + (2 * qrk.stdabw)  ,(qrk.mittelwert + 5*  qrk.stdabw), color="red", alpha=0.2)
+    plt.fill_between(df.datum,qrk.mittelwert - (2 * qrk.stdabw)  ,(qrk.mittelwert - 5*  qrk.stdabw), color="red", alpha=0.2)
 
     #erstellt die Mittelwert Linie
     plt.axhline(qrk.mittelwert, color="green", linestyle="--")
