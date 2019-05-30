@@ -1,7 +1,7 @@
 import requests
 import pytest
 from app.worker import celery
-import random 
+import random
 
 
 def test_messwerte():
