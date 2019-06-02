@@ -18,10 +18,9 @@ def test_create_qrk():
 
 def test_get_qrk():
     r = requests.get("http://localhost:5001/api/v1/qrk")
-    
     assert r.status_code == 200
 
-
+"""
 def test_put_resource():
     data = {
 	"titel": "Neuer Titel",
@@ -36,7 +35,6 @@ def test_put_resource():
         "msg": "Qrk Daten wurden geupdatet."
     }
 
-"""
 def test_get_specific_qrk():
     r = requests.get(
         "http://localhost:5001/api/v1/qrk/acfe19e0-3fcf-4084-ba4f-bab2b7b8f530")
