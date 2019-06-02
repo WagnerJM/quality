@@ -42,9 +42,10 @@ class Messwert(BaseMixin, db.Model):
     valid = db.Column(db.Boolean, default=True)
     qrk_id = db.Column(db.Integer, db.ForeignKey('qrks.qrkID'))
 
-    def __init__(self, wert, date):
+    def __init__(self, datum, wert, valid):
         self.wert = wert
-        self.datum = date
+        self.datum = datum
+        self.valid = valid
 
 class MesswertSchema(ma.ModelSchema):
     class Meta:

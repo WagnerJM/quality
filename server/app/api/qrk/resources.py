@@ -64,11 +64,8 @@ class MesswertListApi(Resource):
 class MesswertApi(Resource):
     def put(self, qrk_id, messwert_id):
         qrk = Qrk.find_by_id(str2uuid(qrk_id))
-        messwert = Messwert.query.filter(and_(qrk_id == qrk.qrkID, messwert_id == str2uuid(messwert_id)))
-        if not messwert:
-            return {
-                "msg": "Messwert konnte nicht gefunden werden."
-            }, 500
+        messwert = Messwert.query.filter_by(id=str2uuid(messwert_id))
+        
         messwert.update(request.json)
         db.session.commit()
 
