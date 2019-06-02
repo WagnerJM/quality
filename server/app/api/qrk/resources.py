@@ -7,6 +7,9 @@ from sqlalchemy import and_
 from datetime import datetime
 from app.worker import celery
 
+from app.utils import create_dataframe, create_QC_Chart
+
+
 class QrkListApi(Resource):
     def get(self):
         qmodel = QrkSchema()
@@ -49,7 +52,10 @@ class MesswertListApi(Resource):
         qrk.messwerte.append(neuer_Messwert)
 
         qrk.save()
-        task = celery.send_task('create_QC_Chart', qrk_id, "./plots/")
+
+        df, qrk = create_dataframe(qrk_id)
+        create_QC_Chart(qrk, df)
+        #task = celery.send_task('create_QC_Chart', (qrk_id, "./plots/"))
 
         return {
             "msg": "Messpunkt wurde gespeichert."
@@ -58,15 +64,15 @@ class MesswertListApi(Resource):
 class MesswertApi(Resource):
     def put(self, qrk_id, messwert_id):
         qrk = Qrk.find_by_id(str2uuid(qrk_id))
-        messwert = Messwert.query.filter(and_(qrk_id == qrks.qrkID, messwert.id == str2uuid(messwert_id)))
-        if not messwert:
-            return {
-                "msg": "Messwert konnte nicht gefunden werden."
-            }, 500
+        messwert = Messwert.query.filter_by(id=str2uuid(messwert_id))
+        
         messwert.update(request.json)
         db.session.commit()
 
-        task = celery.send_task('create_QC_Chart', qrk_id, "./plots/")
+
+        df, qrk = create_dataframe(qrk_id)
+        create_QC_Chart(qrk, df)
+        #task = celery.send_task('create_QC_Chart', (qrk_id, "./plots/"))
         return {
             "msg": "Messwert wurde modifiziert."
         }, 201

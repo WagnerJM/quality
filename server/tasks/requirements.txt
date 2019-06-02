@@ -16,3 +16,4 @@ matplotlib
 pandas
 numpy
 redis
+Flask-JWT-Extended

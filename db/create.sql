@@ -1,1 +1,1 @@
-CREATE DATABASE hubertus;
+CREATE DATABASE app;

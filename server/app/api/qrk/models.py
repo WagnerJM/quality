@@ -37,27 +37,31 @@ class Messwert(BaseMixin, db.Model):
     __tablename__ = 'messwert'
 
     messwertID = db.Column(db.Integer, primary_key=True)
-    datum = db.Column(db.DateTime, nullable=False)
+    datum = db.Column(db.String, nullable=False)
     wert = db.Column(db.Float, nullable=False)
     valid = db.Column(db.Boolean, default=True)
     qrk_id = db.Column(db.Integer, db.ForeignKey('qrks.qrkID'))
 
-    def __init__(self, wert, date):
+    def __init__(self, datum, wert, valid):
         self.wert = wert
-        self.datum = datetime.strptime(date, "%d.%m.%Y")
+        self.datum = datum
+        self.valid = valid
 
-class MesswertSchema(ma.Schema):
+class MesswertSchema(ma.ModelSchema):
     class Meta:
+        model = Messwert
         fields = (
             "id",
-            "datum"
+            "datum",
             "wert",
             "valid"
         )
 
-class QrkSchema(ma.Schema):
-    messwerte = Nested(MesswertSchema, many=True, exclude="qrk_id")
+class QrkSchema(ma.ModelSchema):
+    messwerte = Nested(MesswertSchema, many=True)
+
     class Meta:
+        model= Qrk
         fields = (
             "id",
             "titel",
@@ -68,8 +72,8 @@ class QrkSchema(ma.Schema):
             "obere_eingriffsgrenze",
             "untere_eingriffsgrenze",
             "stdabw",
-            "mittelwerte",
-            "datei_pfad"
+            "datei_pfad",
+            "messwerte"
             
         )
 
