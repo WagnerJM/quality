@@ -99,7 +99,7 @@ def create_QC_Chart(qrk, df):
     plt.ylabel(qrk.y_achse_titel)
     plt.legend()
     
-    datei_pfad = "http://localhost:5001/plot/{}".format(secure_filename(str(qrk.id)))
+    datei_pfad = "http://{}/plot/{}".format(os.getenv("SERVER_IP"), secure_filename(str(qrk.id)))
     qrk.datei_pfad = datei_pfad
     qrk.save()
         
