@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import matplotlib
 import numpy as np  
+import random
 
 import matplotlib.pyplot as plt
 from werkzeug.utils import secure_filename
@@ -36,13 +37,6 @@ def create_dataframe(qrk_id):
 
     return df, qrk
 
-
-
-
-
-
-
-
 def create_QC_Chart(qrk, df):
 
     if os.path.isfile('app/static/plots/{}.png'.format(qrk.id)):
@@ -53,6 +47,7 @@ def create_QC_Chart(qrk, df):
     max_y = df.wert.get("max")
     max_x = df.datum.max()
 
+    plt.plot(df.datum, df.wert, color="grey", alpha=0.5)
     """#numpy arrays für die filter anwendung
     np_arr_x = df.datum.values
     np_arr_y = df.wert.values"""
@@ -93,19 +88,20 @@ def create_QC_Chart(qrk, df):
     #plt.ylimt()
 
     #plot der Daten
-    plt.plot(df.datum, df.wert, color="grey", alpha=0.5)
     plt.title(qrk.titel)
     plt.xlabel(qrk.x_achse_titel)
     plt.ylabel(qrk.y_achse_titel)
     plt.legend()
-    
-    datei_pfad = "http://{}/plot/{}".format(os.getenv("SERVER_IP"), secure_filename(str(qrk.id)))
+    SERVER = "{}:{}".format(os.getenv('SERVER_IP'), os.getenv('SERVER_PORT'))
+    filename = str(random.randint(0,999999999999))
+    datei_pfad = "http://{}/plot/{}".format(SERVER, filename )
     qrk.datei_pfad = datei_pfad
     qrk.save()
         
-    plt.savefig("app/static/plots/{}.png".format(str(qrk.id)) , orientation="landscape")
+    plt.savefig("app/static/plots/{}.png".format(filename) , orientation="landscape")
     print("File created")
 
-
+def createChart(qrk_id):
+    pass
 
 

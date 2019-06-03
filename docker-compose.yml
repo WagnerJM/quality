@@ -31,17 +31,14 @@ services:
       front:
         ipv4_address: 172.16.238.10
     environment:
-     
+      - SERVER_IP=${SERVER_IP}
+      - SERVER_PORT=${SERVER_PORT}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PW=${POSTGRES_PW}
       - REDIS_PW=${REDIS_PW}
       - DATABASE=${DATABASE}
       - SECRET_KEY=${SECRET_KEY}
       - JWT_SECRET_KEY=${JWT_SECRET}
-
-
-
-
 
   redis:
     container_name: cache
@@ -51,7 +48,6 @@ services:
       - 6379
     networks:
       back:
-
 
   task_queue:
     container_name: tasks

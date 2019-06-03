@@ -52,11 +52,6 @@ class MesswertListApi(Resource):
         qrk.messwerte.append(neuer_Messwert)
 
         qrk.save()
-
-        if len(qrk.messwerte) > 1:
-            df, qrk = create_dataframe(qrk_id)
-            create_QC_Chart(qrk, df)
-
         return {
             "msg": "Messpunkt wurde gespeichert."
         }, 201
@@ -68,11 +63,7 @@ class MesswertApi(Resource):
         
         messwert.update(request.json)
         db.session.commit()
-
-        if len(qrk.messwerte) > 1:
-            df, qrk = create_dataframe(qrk_id)
-            create_QC_Chart(qrk, df)
-
+       
         return {
             "msg": "Messwert wurde modifiziert."
         }, 201
