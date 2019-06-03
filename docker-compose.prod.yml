@@ -31,6 +31,9 @@ services:
       front:
         ipv4_address: 172.16.238.10
     environment:
+      - APP_SETTINGS=production
+      - FLASK_APP=wsgi.py
+      - FLASK_ENV=production
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PW=${POSTGRES_PW}
       - REDIS_PW=${REDIS_PW}
