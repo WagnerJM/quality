@@ -9,7 +9,7 @@ ADD . .
 
 # set working directory
 
-EXPOSE 8000
+
 
 # add and install requirements
 COPY ./requirements.txt /server/requirements.txt
