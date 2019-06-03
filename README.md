@@ -38,8 +38,9 @@ Der Dienst ist über die <http://Server-IP:8080> erreichbar.
 
 ## todos
 
-    - Queue Server testen
-    - Chart erstellen lassen
+    ~~- Queue Server testen~~
+    ~~- Chart erstellen lassen~~
+    - Client .env Daten übergeben
     - Installation verbessern
 
 ## Roadmap
