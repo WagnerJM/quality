@@ -53,9 +53,9 @@ class MesswertListApi(Resource):
 
         qrk.save()
 
-        df, qrk = create_dataframe(qrk_id)
-        create_QC_Chart(qrk, df)
-        #task = celery.send_task('create_QC_Chart', (qrk_id, "./plots/"))
+        if len(qrk.messwerte) > 1:
+            df, qrk = create_dataframe(qrk_id)
+            create_QC_Chart(qrk, df)
 
         return {
             "msg": "Messpunkt wurde gespeichert."
@@ -69,10 +69,10 @@ class MesswertApi(Resource):
         messwert.update(request.json)
         db.session.commit()
 
+        if len(qrk.messwerte) > 1:
+            df, qrk = create_dataframe(qrk_id)
+            create_QC_Chart(qrk, df)
 
-        df, qrk = create_dataframe(qrk_id)
-        create_QC_Chart(qrk, df)
-        #task = celery.send_task('create_QC_Chart', (qrk_id, "./plots/"))
         return {
             "msg": "Messwert wurde modifiziert."
         }, 201
