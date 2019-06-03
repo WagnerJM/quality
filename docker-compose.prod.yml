@@ -18,12 +18,26 @@ services:
 
   server:
    
+
+  
+    container_name: server
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    restart: always
+    volumes:
+      - ./server:/server
+    ports:
+      - 8000:8000
+    networks:
+      back:
+      front:
+        ipv4_address: 172.16.238.10
     environment:
       - APP_SETTINGS=production
       - FLASK_APP=wsgi.py
       - FLASK_ENV=production
     command: gunicorn -w 4 -b :8000 wsgi:app
-
 
 
  
