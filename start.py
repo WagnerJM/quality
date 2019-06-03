@@ -20,6 +20,9 @@ def create_env_file():
         print("REDIS_PW= ?")
         REDIS_PW = input(prompt)
 
+        print("SERVER_IP:PORT= ?")
+        SERVER_IP = input(prompt)
+
 
         SECRET_KEY = secrets.token_hex(32)
         JWT_SECRET = secrets.token_hex(32)
@@ -30,7 +33,8 @@ def create_env_file():
             "DATABASE={}\n".format(DATABASE),
             "REDIS_PW={}\n".format(REDIS_PW),
             "SECRET_KEY={}\n".format(SECRET_KEY),
-            "JWT_SECRET={}\n".format(JWT_SECRET)
+            "JWT_SECRET={}\n".format(JWT_SECRET),
+            "SERVER_IP={}\n".format(SERVER_IP)
 
         ]
 
